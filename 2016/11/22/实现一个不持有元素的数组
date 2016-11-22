@@ -3,21 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | 崔大王</title>
+  <title>实现一个不持有元素的数组 | 崔大王</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+  <meta name="description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法
+
+(NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonly)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://cuidawang.github.io/2016/05/15/hello-world">
+<meta property="og:title" content="实现一个不持有元素的数组">
+<meta property="og:url" content="http://cuidawang.github.io/2016/11/22/实现一个不持有元素的数组">
 <meta property="og:site_name" content="崔大王">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-11-18T06:48:21.000Z">
+<meta property="og:description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法
+
+(NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonly)">
+<meta property="og:updated_time" content="2016-11-22T11:33:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="实现一个不持有元素的数组">
+<meta name="twitter:description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法
+
+(NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonly)">
   
     <link rel="alternate" href="/atom.xml" title="崔大王" type="application/atom+xml">
   
@@ -66,10 +69,10 @@ Quick">
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-实现一个不持有元素的数组" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/05/15/hello-world" class="article-date">
-  <time datetime="2016-05-15T11:20:39.000Z" itemprop="datePublished">2016-05-15</time>
+    <a href="/2016/11/22/实现一个不持有元素的数组" class="article-date">
+  <time datetime="2016-11-22T11:07:42.000Z" itemprop="datePublished">2016-11-22</time>
 </a>
     
   </div>
@@ -80,7 +83,7 @@ Quick">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      实现一个不持有元素的数组
     </h1>
   
 
@@ -88,37 +91,52 @@ Quick">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法</p>
+<ul>
+<li>(NSValue *)valueWithNonretainedObject:(nullable id)anObject;<br>@property (nullable, readonly) id nonretainedObjectValue;</li>
+</ul>
+<p>第一个方法官方描述是👉This method is useful if you want to add an object to a Collection but don’t want the collection to create a strong reference to it. 翻译过来就是如果你想把一个对象加入集合类中，但是不希望这个集合类对这个对象进行强引用，那么就使用这个方法。（翻译的不是很专业，大致意思就是这样了）<br>下面的属性调用之后，会将Value转成Object。二者配合使用，就能实现想要的效果了。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><pre><code>Model *model = [[Model alloc] init];
+model.name = @&quot;123&quot;;
+NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
+
+NSMutableArray *array = [NSMutableArray array];
+[array addObject:model];
+NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
+</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=2，正常将一个对象加入数组中时，对象会被强引用，引用计数会被加1。</p>
+<p>我们换一种实现方式 👇</p>
+<pre><code>Model *model = [[Model alloc] init];
+model.name = @&quot;123&quot;;
+NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
+
+NSMutableArray *array = [NSMutableArray array];
+NSValue *value = [NSValue valueWithNonretainedObject:model];
+[array addObject:value];
+NSValue *value1 = [array firstObject];
+Model *model1 = [value1 nonretainedObjectValue];
+NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
+</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=1，这表明，使用以上方式对object进行包装一下，就能保证数组不对Object进行强引用了。</p>
+<p>通过这两个组合，就能实现一个不持有元素的数组了。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cuidawang.github.io/2016/05/15/hello-world" data-id="civtfd1hi000150fyl78sbejk" class="article-share-link">Share</a>
+      <a data-url="http://cuidawang.github.io/2016/11/22/实现一个不持有元素的数组" data-id="civtfd1hm000350fypu10ozvs" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2016/11/18/Category支持添加成员变量" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Category支持添加成员变量
-        
-      </div>
-    </a>
   
+    <a href="/2016/11/22/奇偶排序" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">奇偶排序</div>
+    </a>
   
 </nav>
 

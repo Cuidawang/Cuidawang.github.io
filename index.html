@@ -64,6 +64,153 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-实现一个不持有元素的数组" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/22/实现一个不持有元素的数组" class="article-date">
+  <time datetime="2016-11-22T11:07:42.000Z" itemprop="datePublished">2016-11-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/22/实现一个不持有元素的数组">实现一个不持有元素的数组</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法</p>
+<ul>
+<li>(NSValue *)valueWithNonretainedObject:(nullable id)anObject;<br>@property (nullable, readonly) id nonretainedObjectValue;</li>
+</ul>
+<p>第一个方法官方描述是👉This method is useful if you want to add an object to a Collection but don’t want the collection to create a strong reference to it. 翻译过来就是如果你想把一个对象加入集合类中，但是不希望这个集合类对这个对象进行强引用，那么就使用这个方法。（翻译的不是很专业，大致意思就是这样了）<br>下面的属性调用之后，会将Value转成Object。二者配合使用，就能实现想要的效果了。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><pre><code>Model *model = [[Model alloc] init];
+model.name = @&quot;123&quot;;
+NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
+
+NSMutableArray *array = [NSMutableArray array];
+[array addObject:model];
+NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
+</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=2，正常将一个对象加入数组中时，对象会被强引用，引用计数会被加1。</p>
+<p>我们换一种实现方式 👇</p>
+<pre><code>Model *model = [[Model alloc] init];
+model.name = @&quot;123&quot;;
+NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
+
+NSMutableArray *array = [NSMutableArray array];
+NSValue *value = [NSValue valueWithNonretainedObject:model];
+[array addObject:value];
+NSValue *value1 = [array firstObject];
+Model *model1 = [value1 nonretainedObjectValue];
+NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
+</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=1，这表明，使用以上方式对object进行包装一下，就能保证数组不对Object进行强引用了。</p>
+<p>通过这两个组合，就能实现一个不持有元素的数组了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cuidawang.github.io/2016/11/22/实现一个不持有元素的数组" data-id="civtfd1hm000350fypu10ozvs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-奇偶排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/22/奇偶排序" class="article-date">
+  <time datetime="2016-11-22T04:07:17.000Z" itemprop="datePublished">2016-11-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/22/奇偶排序">奇偶排序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="奇偶排序的算法描述："><a href="#奇偶排序的算法描述：" class="headerlink" title="奇偶排序的算法描述："></a>奇偶排序的算法描述：</h3><p>1，先将待排序数组中的所有奇数位与自己身后相邻的偶数位相比较，如果前者大于后者，则进行交换，直到这一趟结束。<br>2，然后将偶数位与自己身后相邻的奇数位相比较，如果前者大于后者，则进行交换，直到这一趟结束。<br>3，重复1，2的步骤，直到发现无“奇偶”，“偶奇”交换的时候，就认为排序完毕，此时退出循环。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>①待排序数组<br>1 54 100 12 5 3<br>②所有奇数位与身后的相邻偶数位进行交换<br>1 54 12 100 3 5<br>③所有偶数位与身后的相邻奇数位进行交换<br>1 12 54 3 100 5<br>④所有奇数位与身后的相邻偶数位进行交换<br>1 12 3 54 5 100<br>⑤所有偶数位与身后的相邻奇数位进行交换<br>1 3 12 5 54 100<br>⑥所有奇数位与身后的相邻偶数位进行交换<br>1 3 5 12 54 100</p>
+<h3 id="OC代码实现"><a href="#OC代码实现" class="headerlink" title="OC代码实现"></a>OC代码实现</h3><pre><code>    // 待排序数组
+    NSArray *array = @[@1, @54, @100, @12, @5, @3];
+    [self oddEvenSortTestWithSortArray:array];
+
+// 排序函数
+- (NSArray *)oddEvenSortTestWithSortArray:(NSArray *)array
+{
+    NSMutableArray *sortArray = [NSMutableArray arrayWithArray:array];
+    // 是否排序完成
+    BOOL isSorted = NO;
+    while (!isSorted) {// 排序完成后，退出循环
+        isSorted = YES;
+
+        // 取奇数
+        for (NSInteger i = 0; i &lt; sortArray.count; i += 2) {
+            if (i+1 &lt; sortArray.count) {
+                NSInteger numLeft = [sortArray[i] integerValue];
+                NSInteger numRight = [sortArray[i+1] integerValue];
+                if (numLeft &gt; numRight) {
+                [sortArray replaceObjectAtIndex:i withObject:@(numRight)];
+                [sortArray replaceObjectAtIndex:i+1 withObject:@(numLeft)];
+                isSorted = NO;
+                }
+            }      
+        }   
+
+        // 取偶数
+        for (NSInteger i = 1; i &lt; sortArray.count; i = i+2) {
+            if (i+1 &lt; sortArray.count) {
+                NSInteger numLeft = [sortArray[i] integerValue];
+                NSInteger numRight = [sortArray[i+1] integerValue];
+                if (numLeft &gt; numRight) {
+                [sortArray replaceObjectAtIndex:i withObject:@(numRight)];
+                [sortArray replaceObjectAtIndex:i+1 withObject:@(numLeft)];
+                isSorted = NO;
+                }
+            }
+        }
+    }
+
+    return sortArray;
+}
+</code></pre><p>以上就是简单的奇偶排序了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cuidawang.github.io/2016/11/22/奇偶排序" data-id="civtfd1hk000250fyki2jyqze" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/排序/">排序</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Category支持添加成员变量" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/18/Category支持添加成员变量" class="article-date">
@@ -155,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cuidawang.github.io/2016/11/18/Category支持添加成员变量" data-id="civnfhsqe0000q4fy2186qcpz" class="article-share-link">Share</a>
+      <a data-url="http://cuidawang.github.io/2016/11/18/Category支持添加成员变量" data-id="civtfd1hc000050fy2q1js9q0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -200,7 +347,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cuidawang.github.io/2016/05/15/hello-world" data-id="civnfhsqk0001q4fyffvzplqs" class="article-share-link">Share</a>
+      <a data-url="http://cuidawang.github.io/2016/05/15/hello-world" data-id="civtfd1hi000150fyl78sbejk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -219,9 +366,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序/">排序</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -238,6 +399,14 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/11/22/实现一个不持有元素的数组">实现一个不持有元素的数组</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/22/奇偶排序">奇偶排序</a>
+          </li>
         
           <li>
             <a href="/2016/11/18/Category支持添加成员变量">Category支持添加成员变量</a>
