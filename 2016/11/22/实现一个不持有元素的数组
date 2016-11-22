@@ -15,7 +15,7 @@
 <meta property="og:description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法
 
 (NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonly)">
-<meta property="og:updated_time" content="2016-11-22T11:33:38.000Z">
+<meta property="og:updated_time" content="2016-11-22T12:04:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现一个不持有元素的数组">
 <meta name="twitter:description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法
@@ -96,7 +96,8 @@
 <li>(NSValue *)valueWithNonretainedObject:(nullable id)anObject;<br>@property (nullable, readonly) id nonretainedObjectValue;</li>
 </ul>
 <p>第一个方法官方描述是👉This method is useful if you want to add an object to a Collection but don’t want the collection to create a strong reference to it. 翻译过来就是如果你想把一个对象加入集合类中，但是不希望这个集合类对这个对象进行强引用，那么就使用这个方法。（翻译的不是很专业，大致意思就是这样了）<br>下面的属性调用之后，会将Value转成Object。二者配合使用，就能实现想要的效果了。</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><pre><code>Model *model = [[Model alloc] init];
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>将工程设置成手动内存管理，Build Settings-&gt;搜索garbage-&gt;将Automatic Reference Counting设置成NO。</p>
+<pre><code>Model *model = [[Model alloc] init];
 model.name = @&quot;123&quot;;
 NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
 
@@ -121,7 +122,7 @@ NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cuidawang.github.io/2016/11/22/实现一个不持有元素的数组" data-id="civtfd1hm000350fypu10ozvs" class="article-share-link">Share</a>
+      <a data-url="http://cuidawang.github.io/2016/11/22/实现一个不持有元素的数组" data-id="civtgemv60003b0fy6v1mxbee" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
