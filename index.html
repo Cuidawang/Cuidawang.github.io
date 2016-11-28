@@ -200,32 +200,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法</p>
-<ul>
-<li>(NSValue *)valueWithNonretainedObject:(nullable id)anObject;<br>@property (nullable, readonly) id nonretainedObjectValue;</li>
-</ul>
+        <p>Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="built_in">NSValue</span> *)valueWithNonretainedObject:(nullable <span class="keyword">id</span>)anObject;</span><br><span class="line"><span class="keyword">@property</span> (nullable, <span class="keyword">readonly</span>) <span class="keyword">id</span> nonretainedObjectValue;</span><br></pre></td></tr></table></figure></p>
 <p>第一个方法官方描述是👉This method is useful if you want to add an object to a Collection but don’t want the collection to create a strong reference to it. 翻译过来就是如果你想把一个对象加入集合类中，但是不希望这个集合类对这个对象进行强引用，那么就使用这个方法。（翻译的不是很专业，大致意思就是这样了）<br>下面的属性调用之后，会将Value转成Object。二者配合使用，就能实现想要的效果了。</p>
 <h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>将工程设置成手动内存管理，Build Settings-&gt;搜索garbage-&gt;将Automatic Reference Counting设置成NO。</p>
-<pre><code>Model *model = [[Model alloc] init];
-model.name = @&quot;123&quot;;
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-
-NSMutableArray *array = [NSMutableArray array];
-[array addObject:model];
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=2，正常将一个对象加入数组中时，对象会被强引用，引用计数会被加1。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Model *model = [[Model alloc] init];</span><br><span class="line">model.name = <span class="string">@"123"</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"retainCount=%zd"</span>, [model retainCount]);</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSMutableArray</span> *array = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line">[array addObject:model];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"retainCount=%zd"</span>, [model retainCount]);</span><br></pre></td></tr></table></figure>
+<p>上面两个输出的日志分别是 retainCount=1、retainCount=2，正常将一个对象加入数组中时，对象会被强引用，引用计数会被加1。</p>
 <p>我们换一种实现方式 👇</p>
-<pre><code>Model *model = [[Model alloc] init];
-model.name = @&quot;123&quot;;
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-
-NSMutableArray *array = [NSMutableArray array];
-NSValue *value = [NSValue valueWithNonretainedObject:model];
-[array addObject:value];
-NSValue *value1 = [array firstObject];
-Model *model1 = [value1 nonretainedObjectValue];
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=1，这表明，使用以上方式对object进行包装一下，就能保证数组不对Object进行强引用了。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Model *model = [[Model alloc] init];</span><br><span class="line">model.name = <span class="string">@"123"</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"retainCount=%zd"</span>, [model retainCount]);</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSMutableArray</span> *array = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line"><span class="built_in">NSValue</span> *value = [<span class="built_in">NSValue</span> valueWithNonretainedObject:model];</span><br><span class="line">[array addObject:value];</span><br><span class="line"><span class="built_in">NSValue</span> *value1 = [array firstObject];</span><br><span class="line">Model *model1 = [value1 nonretainedObjectValue];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"retainCount=%zd"</span>, [model retainCount]);</span><br></pre></td></tr></table></figure>
+<p>上面两个输出的日志分别是 retainCount=1、retainCount=1，这表明，使用以上方式对object进行包装一下，就能保证数组不对Object进行强引用了。</p>
 <p>通过这两个组合，就能实现一个不持有元素的数组了。</p>
 
       
@@ -238,7 +220,7 @@ NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
       
@@ -278,49 +260,8 @@ NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
       
         <h3 id="奇偶排序的算法描述："><a href="#奇偶排序的算法描述：" class="headerlink" title="奇偶排序的算法描述："></a>奇偶排序的算法描述：</h3><p>1，先将待排序数组中的所有奇数位与自己身后相邻的偶数位相比较，如果前者大于后者，则进行交换，直到这一趟结束。<br>2，然后将偶数位与自己身后相邻的奇数位相比较，如果前者大于后者，则进行交换，直到这一趟结束。<br>3，重复1，2的步骤，直到发现无“奇偶”，“偶奇”交换的时候，就认为排序完毕，此时退出循环。</p>
 <h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>①待排序数组<br>1 54 100 12 5 3<br>②所有奇数位与身后的相邻偶数位进行交换<br>1 54 12 100 3 5<br>③所有偶数位与身后的相邻奇数位进行交换<br>1 12 54 3 100 5<br>④所有奇数位与身后的相邻偶数位进行交换<br>1 12 3 54 5 100<br>⑤所有偶数位与身后的相邻奇数位进行交换<br>1 3 12 5 54 100<br>⑥所有奇数位与身后的相邻偶数位进行交换<br>1 3 5 12 54 100</p>
-<h3 id="OC代码实现"><a href="#OC代码实现" class="headerlink" title="OC代码实现"></a>OC代码实现</h3><pre><code>    // 待排序数组
-    NSArray *array = @[@1, @54, @100, @12, @5, @3];
-    [self oddEvenSortTestWithSortArray:array];
-
-// 排序函数
-- (NSArray *)oddEvenSortTestWithSortArray:(NSArray *)array
-{
-    NSMutableArray *sortArray = [NSMutableArray arrayWithArray:array];
-    // 是否排序完成
-    BOOL isSorted = NO;
-    while (!isSorted) {// 排序完成后，退出循环
-        isSorted = YES;
-
-        // 取奇数
-        for (NSInteger i = 0; i &lt; sortArray.count; i += 2) {
-            if (i+1 &lt; sortArray.count) {
-                NSInteger numLeft = [sortArray[i] integerValue];
-                NSInteger numRight = [sortArray[i+1] integerValue];
-                if (numLeft &gt; numRight) {
-                [sortArray replaceObjectAtIndex:i withObject:@(numRight)];
-                [sortArray replaceObjectAtIndex:i+1 withObject:@(numLeft)];
-                isSorted = NO;
-                }
-            }      
-        }   
-
-        // 取偶数
-        for (NSInteger i = 1; i &lt; sortArray.count; i = i+2) {
-            if (i+1 &lt; sortArray.count) {
-                NSInteger numLeft = [sortArray[i] integerValue];
-                NSInteger numRight = [sortArray[i+1] integerValue];
-                if (numLeft &gt; numRight) {
-                [sortArray replaceObjectAtIndex:i withObject:@(numRight)];
-                [sortArray replaceObjectAtIndex:i+1 withObject:@(numLeft)];
-                isSorted = NO;
-                }
-            }
-        }
-    }
-
-    return sortArray;
-}
-</code></pre><p>以上就是简单的奇偶排序了</p>
+<h3 id="OC代码实现"><a href="#OC代码实现" class="headerlink" title="OC代码实现"></a>OC代码实现</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 待排序数组</span></span><br><span class="line">    <span class="built_in">NSArray</span> *array = @[@<span class="number">1</span>, @<span class="number">54</span>, @<span class="number">100</span>, @<span class="number">12</span>, @<span class="number">5</span>, @<span class="number">3</span>];</span><br><span class="line">    [<span class="keyword">self</span> oddEvenSortTestWithSortArray:array];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排序函数</span></span><br><span class="line">- (<span class="built_in">NSArray</span> *)oddEvenSortTestWithSortArray:(<span class="built_in">NSArray</span> *)array</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSMutableArray</span> *sortArray = [<span class="built_in">NSMutableArray</span> arrayWithArray:array];</span><br><span class="line">    <span class="comment">// 是否排序完成</span></span><br><span class="line">    <span class="built_in">BOOL</span> isSorted = <span class="literal">NO</span>;</span><br><span class="line">    <span class="keyword">while</span> (!isSorted) &#123;<span class="comment">// 排序完成后，退出循环</span></span><br><span class="line">        isSorted = <span class="literal">YES</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 取奇数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSInteger</span> i = <span class="number">0</span>; i &lt; sortArray.count; i += <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i+<span class="number">1</span> &lt; sortArray.count) &#123;</span><br><span class="line">                <span class="built_in">NSInteger</span> numLeft = [sortArray[i] integerValue];</span><br><span class="line">                <span class="built_in">NSInteger</span> numRight = [sortArray[i+<span class="number">1</span>] integerValue];</span><br><span class="line">                <span class="keyword">if</span> (numLeft &gt; numRight) &#123;</span><br><span class="line">                [sortArray replaceObjectAtIndex:i withObject:@(numRight)];</span><br><span class="line">                [sortArray replaceObjectAtIndex:i+<span class="number">1</span> withObject:@(numLeft)];</span><br><span class="line">                isSorted = <span class="literal">NO</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;      </span><br><span class="line">        &#125;   </span><br><span class="line"></span><br><span class="line">        <span class="comment">// 取偶数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSInteger</span> i = <span class="number">1</span>; i &lt; sortArray.count; i = i+<span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i+<span class="number">1</span> &lt; sortArray.count) &#123;</span><br><span class="line">                <span class="built_in">NSInteger</span> numLeft = [sortArray[i] integerValue];</span><br><span class="line">                <span class="built_in">NSInteger</span> numRight = [sortArray[i+<span class="number">1</span>] integerValue];</span><br><span class="line">                <span class="keyword">if</span> (numLeft &gt; numRight) &#123;</span><br><span class="line">                [sortArray replaceObjectAtIndex:i withObject:@(numRight)];</span><br><span class="line">                [sortArray replaceObjectAtIndex:i+<span class="number">1</span> withObject:@(numLeft)];</span><br><span class="line">                isSorted = <span class="literal">NO</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sortArray;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上就是简单的奇偶排序了</p>
 
       
     </div>
@@ -525,7 +466,7 @@ NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a>
+    				<a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a>
     			</div>
     	</section>
     

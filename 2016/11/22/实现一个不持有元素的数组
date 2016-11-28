@@ -8,22 +8,16 @@
   <link rel="dns-prefetch" href="http://cuikeyi.com">
   <title>实现一个不持有元素的数组 | 崔大王</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法
-
-(NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonly)">
+  <meta name="description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法12+ (NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="实现一个不持有元素的数组">
 <meta property="og:url" content="http://cuikeyi.com/2016/11/22/实现一个不持有元素的数组">
 <meta property="og:site_name" content="崔大王">
-<meta property="og:description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法
-
-(NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonly)">
-<meta property="og:updated_time" content="2016-11-22T12:04:11.000Z">
+<meta property="og:description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法12+ (NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonl">
+<meta property="og:updated_time" content="2016-11-28T10:10:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现一个不持有元素的数组">
-<meta name="twitter:description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法
-
-(NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonly)">
+<meta name="twitter:description" content="Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法12+ (NSValue *)valueWithNonretainedObject:(nullable id)anObject;@property (nullable, readonl">
   
     <link rel="alternative" href="/atom.xml" title="崔大王" type="application/atom+xml">
   
@@ -140,32 +134,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法</p>
-<ul>
-<li>(NSValue *)valueWithNonretainedObject:(nullable id)anObject;<br>@property (nullable, readonly) id nonretainedObjectValue;</li>
-</ul>
+        <p>Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="built_in">NSValue</span> *)valueWithNonretainedObject:(nullable <span class="keyword">id</span>)anObject;</span><br><span class="line"><span class="keyword">@property</span> (nullable, <span class="keyword">readonly</span>) <span class="keyword">id</span> nonretainedObjectValue;</span><br></pre></td></tr></table></figure></p>
 <p>第一个方法官方描述是👉This method is useful if you want to add an object to a Collection but don’t want the collection to create a strong reference to it. 翻译过来就是如果你想把一个对象加入集合类中，但是不希望这个集合类对这个对象进行强引用，那么就使用这个方法。（翻译的不是很专业，大致意思就是这样了）<br>下面的属性调用之后，会将Value转成Object。二者配合使用，就能实现想要的效果了。</p>
 <h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>将工程设置成手动内存管理，Build Settings-&gt;搜索garbage-&gt;将Automatic Reference Counting设置成NO。</p>
-<pre><code>Model *model = [[Model alloc] init];
-model.name = @&quot;123&quot;;
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-
-NSMutableArray *array = [NSMutableArray array];
-[array addObject:model];
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=2，正常将一个对象加入数组中时，对象会被强引用，引用计数会被加1。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Model *model = [[Model alloc] init];</span><br><span class="line">model.name = <span class="string">@"123"</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"retainCount=%zd"</span>, [model retainCount]);</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSMutableArray</span> *array = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line">[array addObject:model];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"retainCount=%zd"</span>, [model retainCount]);</span><br></pre></td></tr></table></figure>
+<p>上面两个输出的日志分别是 retainCount=1、retainCount=2，正常将一个对象加入数组中时，对象会被强引用，引用计数会被加1。</p>
 <p>我们换一种实现方式 👇</p>
-<pre><code>Model *model = [[Model alloc] init];
-model.name = @&quot;123&quot;;
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-
-NSMutableArray *array = [NSMutableArray array];
-NSValue *value = [NSValue valueWithNonretainedObject:model];
-[array addObject:value];
-NSValue *value1 = [array firstObject];
-Model *model1 = [value1 nonretainedObjectValue];
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=1，这表明，使用以上方式对object进行包装一下，就能保证数组不对Object进行强引用了。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Model *model = [[Model alloc] init];</span><br><span class="line">model.name = <span class="string">@"123"</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"retainCount=%zd"</span>, [model retainCount]);</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSMutableArray</span> *array = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line"><span class="built_in">NSValue</span> *value = [<span class="built_in">NSValue</span> valueWithNonretainedObject:model];</span><br><span class="line">[array addObject:value];</span><br><span class="line"><span class="built_in">NSValue</span> *value1 = [array firstObject];</span><br><span class="line">Model *model1 = [value1 nonretainedObjectValue];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"retainCount=%zd"</span>, [model retainCount]);</span><br></pre></td></tr></table></figure>
+<p>上面两个输出的日志分别是 retainCount=1、retainCount=1，这表明，使用以上方式对object进行包装一下，就能保证数组不对Object进行强引用了。</p>
 <p>通过这两个组合，就能实现一个不持有元素的数组了。</p>
 
       
@@ -178,7 +154,7 @@ NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
       
@@ -293,7 +269,7 @@ NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a>
+    				<a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a>
     			</div>
     	</section>
     
