@@ -6,17 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://cuikeyi.com">
-  <title>崔大王</title>
+  <title>利用Autolayout实现View间隔自动调整 | 崔大王</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="崔大王">
-<meta property="og:url" content="http://cuikeyi.com/index.html">
+  <meta name="description" content="1、使用背景在做需求时，常常会遇见这样的需求，一个界面中，有多个View，每个View的大小由它的内容决定。当一个View有内容时，下一个view与它之间会有一个间隔，如果没有内容的话，下一个View就会紧挨着它。如下图所示👇图一中，四个Label的大小都是自适应的，之间的间距是10px，当第二个Label中没有文字的时候，显示如下图👇但是当第二个Label和第三个Label同时没有文字的时候">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用Autolayout实现View间隔自动调整">
+<meta property="og:url" content="http://cuikeyi.com/2016/11/27/利用Autolayout实现View间隔自动调整">
 <meta property="og:site_name" content="崔大王">
-<meta property="og:description">
+<meta property="og:description" content="1、使用背景在做需求时，常常会遇见这样的需求，一个界面中，有多个View，每个View的大小由它的内容决定。当一个View有内容时，下一个view与它之间会有一个间隔，如果没有内容的话，下一个View就会紧挨着它。如下图所示👇图一中，四个Label的大小都是自适应的，之间的间距是10px，当第二个Label中没有文字的时候，显示如下图👇但是当第二个Label和第三个Label同时没有文字的时候">
+<meta property="og:image" content="http://ohc6xoujj.bkt.clouddn.com/layout_label1.png?imageView2/2/w/250">
+<meta property="og:image" content="http://ohc6xoujj.bkt.clouddn.com/layout_label2.png?imageView2/2/w/250">
+<meta property="og:image" content="http://ohc6xoujj.bkt.clouddn.com/layout_label3.png?imageView2/2/w/250">
+<meta property="og:updated_time" content="2016-11-28T08:01:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="崔大王">
-<meta name="twitter:description">
+<meta name="twitter:title" content="利用Autolayout实现View间隔自动调整">
+<meta name="twitter:description" content="1、使用背景在做需求时，常常会遇见这样的需求，一个界面中，有多个View，每个View的大小由它的内容决定。当一个View有内容时，下一个view与它之间会有一个间隔，如果没有内容的话，下一个View就会紧挨着它。如下图所示👇图一中，四个Label的大小都是自适应的，之间的间距是10px，当第二个Label中没有文字的时候，显示如下图👇但是当第二个Label和第三个Label同时没有文字的时候">
+<meta name="twitter:image" content="http://ohc6xoujj.bkt.clouddn.com/layout_label1.png?imageView2/2/w/250">
   
     <link rel="alternative" href="/atom.xml" title="崔大王" type="application/atom+xml">
   
@@ -115,9 +120,7 @@
 </nav>
 
       <div class="body-wrap">
-        
-  
-    <article id="post-利用Autolayout实现View间隔自动调整" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-利用Autolayout实现View间隔自动调整" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <input type="hidden" class="isFancy" />
@@ -126,8 +129,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/27/利用Autolayout实现View间隔自动调整">利用Autolayout实现View间隔自动调整</a>
+    <h1 class="article-title" itemprop="name">
+      利用Autolayout实现View间隔自动调整
     </h1>
   
 
@@ -172,81 +175,37 @@
   </div>
 </article>
 
-
-
-
-
-
-
-
-
-
   
-    <article id="post-实现一个不持有元素的数组" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/22/实现一个不持有元素的数组">实现一个不持有元素的数组</a>
-    </h1>
   
+    <a href="/2016/11/22/实现一个不持有元素的数组" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">实现一个不持有元素的数组</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Objective-C里面的数组，放进里边的元素会被持有，会对加入的元素进行一次强引用，那么怎么才能做到加入数组的元素不被持有呢？下面介绍 NSValue (NSValueExtensionMethods)类中的方法</p>
-<ul>
-<li>(NSValue *)valueWithNonretainedObject:(nullable id)anObject;<br>@property (nullable, readonly) id nonretainedObjectValue;</li>
-</ul>
-<p>第一个方法官方描述是👉This method is useful if you want to add an object to a Collection but don’t want the collection to create a strong reference to it. 翻译过来就是如果你想把一个对象加入集合类中，但是不希望这个集合类对这个对象进行强引用，那么就使用这个方法。（翻译的不是很专业，大致意思就是这样了）<br>下面的属性调用之后，会将Value转成Object。二者配合使用，就能实现想要的效果了。</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>将工程设置成手动内存管理，Build Settings-&gt;搜索garbage-&gt;将Automatic Reference Counting设置成NO。</p>
-<pre><code>Model *model = [[Model alloc] init];
-model.name = @&quot;123&quot;;
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
 
-NSMutableArray *array = [NSMutableArray array];
-[array addObject:model];
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=2，正常将一个对象加入数组中时，对象会被强引用，引用计数会被加1。</p>
-<p>我们换一种实现方式 👇</p>
-<pre><code>Model *model = [[Model alloc] init];
-model.name = @&quot;123&quot;;
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
 
-NSMutableArray *array = [NSMutableArray array];
-NSValue *value = [NSValue valueWithNonretainedObject:model];
-[array addObject:value];
-NSValue *value1 = [array firstObject];
-Model *model1 = [value1 nonretainedObjectValue];
-NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
-</code></pre><p>上面两个输出的日志分别是 retainCount=1、retainCount=1，这表明，使用以上方式对object进行包装一下，就能保证数组不对Object进行强引用了。</p>
-<p>通过这两个组合，就能实现一个不持有元素的数组了。</p>
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/11/22/实现一个不持有元素的数组" class="archive-article-date">
-  	<time datetime="2016-11-22T11:07:42.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-22</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
-
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
@@ -254,219 +213,6 @@ NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
 
 
 
-
-
-
-  
-    <article id="post-奇偶排序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/22/奇偶排序">奇偶排序</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="奇偶排序的算法描述："><a href="#奇偶排序的算法描述：" class="headerlink" title="奇偶排序的算法描述："></a>奇偶排序的算法描述：</h3><p>1，先将待排序数组中的所有奇数位与自己身后相邻的偶数位相比较，如果前者大于后者，则进行交换，直到这一趟结束。<br>2，然后将偶数位与自己身后相邻的奇数位相比较，如果前者大于后者，则进行交换，直到这一趟结束。<br>3，重复1，2的步骤，直到发现无“奇偶”，“偶奇”交换的时候，就认为排序完毕，此时退出循环。</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>①待排序数组<br>1 54 100 12 5 3<br>②所有奇数位与身后的相邻偶数位进行交换<br>1 54 12 100 3 5<br>③所有偶数位与身后的相邻奇数位进行交换<br>1 12 54 3 100 5<br>④所有奇数位与身后的相邻偶数位进行交换<br>1 12 3 54 5 100<br>⑤所有偶数位与身后的相邻奇数位进行交换<br>1 3 12 5 54 100<br>⑥所有奇数位与身后的相邻偶数位进行交换<br>1 3 5 12 54 100</p>
-<h3 id="OC代码实现"><a href="#OC代码实现" class="headerlink" title="OC代码实现"></a>OC代码实现</h3><pre><code>    // 待排序数组
-    NSArray *array = @[@1, @54, @100, @12, @5, @3];
-    [self oddEvenSortTestWithSortArray:array];
-
-// 排序函数
-- (NSArray *)oddEvenSortTestWithSortArray:(NSArray *)array
-{
-    NSMutableArray *sortArray = [NSMutableArray arrayWithArray:array];
-    // 是否排序完成
-    BOOL isSorted = NO;
-    while (!isSorted) {// 排序完成后，退出循环
-        isSorted = YES;
-
-        // 取奇数
-        for (NSInteger i = 0; i &lt; sortArray.count; i += 2) {
-            if (i+1 &lt; sortArray.count) {
-                NSInteger numLeft = [sortArray[i] integerValue];
-                NSInteger numRight = [sortArray[i+1] integerValue];
-                if (numLeft &gt; numRight) {
-                [sortArray replaceObjectAtIndex:i withObject:@(numRight)];
-                [sortArray replaceObjectAtIndex:i+1 withObject:@(numLeft)];
-                isSorted = NO;
-                }
-            }      
-        }   
-
-        // 取偶数
-        for (NSInteger i = 1; i &lt; sortArray.count; i = i+2) {
-            if (i+1 &lt; sortArray.count) {
-                NSInteger numLeft = [sortArray[i] integerValue];
-                NSInteger numRight = [sortArray[i+1] integerValue];
-                if (numLeft &gt; numRight) {
-                [sortArray replaceObjectAtIndex:i withObject:@(numRight)];
-                [sortArray replaceObjectAtIndex:i+1 withObject:@(numLeft)];
-                isSorted = NO;
-                }
-            }
-        }
-    }
-
-    return sortArray;
-}
-</code></pre><p>以上就是简单的奇偶排序了</p>
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/11/22/奇偶排序" class="archive-article-date">
-  	<time datetime="2016-11-22T04:07:17.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-22</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/排序/">排序</a></li></ul>
-	</div>
-
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Category支持添加成员变量" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/18/Category支持添加成员变量">Category支持添加成员变量</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在Category中使用@property也是只会生成setter和getter方法的声明，如果我们真的需要给Category增加属性的实现，需要借助于运行时的两个函数：<br>1）obj_setAssociatedObject<br>2）obj_getAssociatedObject</p>
-<p>首先介绍一下@property，它的本质其实是ivar（实例变量）+ getter方法 + setter方法。<br>所以在Category中重写getter和setter方法，再添加一个ivar的变量，就可以实现@property的功能了。</p>
-<p>举个例子，给UIView的分类添加三个属性，height（NSNumber）， page（NSInteger）， name（NSString）<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span> //	.h文件</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIView</span> (<span class="title">Category</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSNumber</span> *height;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSInteger</span> page;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"UIView+Category.h"</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UIView</span> (<span class="title">Category</span>) //	.<span class="title">m</span>文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@dynamic</span> height, page, name;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setHeight:(<span class="built_in">NSNumber</span> *)height</span><br><span class="line">&#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="string">@"height"</span>, height, OBJC_ASSO<span class="built_in">CIATION_RETAIN_NONATOMIC</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSNumber</span> *)height</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, <span class="string">@"height"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setName:(<span class="built_in">NSString</span> *)name</span><br><span class="line">&#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="string">@"name"</span>, name, OBJC_ASSO<span class="built_in">CIATION_COPY</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span> *)name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, <span class="string">@"name"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setPage:(<span class="built_in">NSInteger</span>)page</span><br><span class="line">&#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="string">@"page"</span>, @(page), OBJC_ASSO<span class="built_in">CIATION_RETAIN_NONATOMIC</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSInteger</span>)page</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [(<span class="built_in">NSNumber</span> *)objc_getAssociatedObject(<span class="keyword">self</span>, <span class="string">@"page"</span>) integerValue];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
-<p>以上代码就实现了给Category动态添加属性。下面介绍这两个方法<br>1，objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)<br>这个函数需要四个参数：源对象，关键字，关联的对象和一个关联策略。</p>
-<ul>
-<li>@param object： 源对象 self</li>
-<li>@param key：    唯一静态变量Key</li>
-<li>@param value：关联的对象</li>
-<li>@param policy： 关联政策,相当于属性括号中的限定条件</li>
-</ul>
-<p>typedef OBJC_ENUM(uintptr_t, objc_AssociationPolicy) {<br>    OBJC_ASSOCIATION_ASSIGN = 0,           // 👉(assign)<br>    OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, // 👉(nonatomic, retain)<br>    OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   // 👉(nonatomic, copy)<br>    OBJC_ASSOCIATION_RETAIN = 01401,       // 👉(retain)<br>    OBJC_ASSOCIATION_COPY = 01403          // 👉(copy)<br>};</p>
-<p>2，objc_getAssociatedObject(id object, const void *key)<br>这个函数用于获取关联对象的结果。</p>
-<ul>
-<li>@param object： 源对象 self</li>
-<li>@param key：    唯一静态变量Key</li>
-</ul>
-<p>👆👆👆<br>利用以上的方法，就可以给Category添加属性了。</p>
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/11/18/Category支持添加成员变量" class="archive-article-date">
-  	<time datetime="2016-11-18T05:30:53.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-18</time>
-</a>
-      
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/15/hello-world">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/05/15/hello-world" class="archive-article-date">
-  	<time datetime="2016-05-15T11:20:39.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-05-15</time>
-</a>
-      
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
-  
 
 
       </div>
@@ -488,8 +234,8 @@ NSLog(@&quot;retainCount=%zd&quot;, [model retainCount]);
 		fancybox: true,
 		mathjax: false,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

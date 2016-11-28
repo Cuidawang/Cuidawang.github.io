@@ -3,77 +3,126 @@
 <head>
   <meta charset="utf-8">
   
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://cuikeyi.com">
   <title>Category支持添加成员变量 | 崔大王</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在Category中使用@property也是只会生成setter和getter方法的声明，如果我们真的需要给Category增加属性的实现，需要借助于运行时的两个函数：1）obj_setAssociatedObject2）obj_getAssociatedObject
 首先介绍一下@property，它的本质其实是ivar（实例变量）+ getter方法 + setter方法。所以在Catego">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Category支持添加成员变量">
-<meta property="og:url" content="http://cuidawang.github.io/2016/11/18/Category支持添加成员变量">
+<meta property="og:url" content="http://cuikeyi.com/2016/11/18/Category支持添加成员变量">
 <meta property="og:site_name" content="崔大王">
 <meta property="og:description" content="在Category中使用@property也是只会生成setter和getter方法的声明，如果我们真的需要给Category增加属性的实现，需要借助于运行时的两个函数：1）obj_setAssociatedObject2）obj_getAssociatedObject
 首先介绍一下@property，它的本质其实是ivar（实例变量）+ getter方法 + setter方法。所以在Catego">
-<meta property="og:updated_time" content="2016-11-18T06:47:18.000Z">
+<meta property="og:updated_time" content="2016-11-28T04:12:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Category支持添加成员变量">
 <meta name="twitter:description" content="在Category中使用@property也是只会生成setter和getter方法的声明，如果我们真的需要给Category增加属性的实现，需要借助于运行时的两个函数：1）obj_setAssociatedObject2）obj_getAssociatedObject
 首先介绍一下@property，它的本质其实是ivar（实例变量）+ getter方法 + setter方法。所以在Catego">
   
-    <link rel="alternate" href="/atom.xml" title="崔大王" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="崔大王" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/main.css">
   
 
 </head>
 
 <body>
   <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">崔大王</a>
-      </h1>
-      
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="http://ohc6xoujj.bkt.clouddn.com/avatar.JPG" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">崔大王</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="weibo" target="_blank" href="http://weibo.com/cuikeyi520" title="weibo">weibo</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://cuidawang.github.io"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-Category支持添加成员变量" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/18/Category支持添加成员变量" class="article-date">
-  <time datetime="2016-11-18T05:30:53.000Z" itemprop="datePublished">2016-11-18</time>
-</a>
-    
-  </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">崔大王</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="http://ohc6xoujj.bkt.clouddn.com/avatar.JPG" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">崔大王</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="weibo" target="_blank" href="http://weibo.com/cuikeyi520" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-Category支持添加成员变量" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
       <header class="article-header">
@@ -90,56 +139,8 @@
       
         <p>在Category中使用@property也是只会生成setter和getter方法的声明，如果我们真的需要给Category增加属性的实现，需要借助于运行时的两个函数：<br>1）obj_setAssociatedObject<br>2）obj_getAssociatedObject</p>
 <p>首先介绍一下@property，它的本质其实是ivar（实例变量）+ getter方法 + setter方法。<br>所以在Category中重写getter和setter方法，再添加一个ivar的变量，就可以实现@property的功能了。</p>
-<p>举个例子，给UIView的分类添加三个属性，height（NSNumber）， page（NSInteger）， name（NSString）<br>👇 👇 👇</p>
-<pre><code>#import &lt;UIKit/UIKit.h&gt; //    .h文件
-
-@interface UIView (Category)
-
-@property (nonatomic, strong) NSNumber *height;
-@property (nonatomic, assign) NSInteger page;
-@property (nonatomic, copy) NSString *name;
-
-@end
-</code></pre><p>👇 👇 👇</p>
-<pre><code>#import &quot;UIView+Category.h&quot;
-#import &lt;objc/runtime.h&gt;
-
-@implementation UIView (Category) //    .m文件
-
-@dynamic height, page, name;
-
-- (void)setHeight:(NSNumber *)height
-{
-    objc_setAssociatedObject(self, @&quot;height&quot;, height, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSNumber *)height
-{
-    return objc_getAssociatedObject(self, @&quot;height&quot;);
-}
-
-- (void)setName:(NSString *)name
-{
-    objc_setAssociatedObject(self, @&quot;name&quot;, name, OBJC_ASSOCIATION_COPY);
-}
-
-- (NSString *)name
-{
-    return objc_getAssociatedObject(self, @&quot;name&quot;);
-}
-
-- (void)setPage:(NSInteger)page
-{
-    objc_setAssociatedObject(self, @&quot;page&quot;, @(page), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSInteger)page
-{
-    return [(NSNumber *)objc_getAssociatedObject(self, @&quot;page&quot;) integerValue];
-}
-
-@end
-</code></pre><p>以上代码就实现了给Category动态添加属性。下面介绍这两个方法<br>1，objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)<br>这个函数需要四个参数：源对象，关键字，关联的对象和一个关联策略。</p>
+<p>举个例子，给UIView的分类添加三个属性，height（NSNumber）， page（NSInteger）， name（NSString）<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span> //	.h文件</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIView</span> (<span class="title">Category</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSNumber</span> *height;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSInteger</span> page;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"UIView+Category.h"</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UIView</span> (<span class="title">Category</span>) //	.<span class="title">m</span>文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@dynamic</span> height, page, name;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setHeight:(<span class="built_in">NSNumber</span> *)height</span><br><span class="line">&#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="string">@"height"</span>, height, OBJC_ASSO<span class="built_in">CIATION_RETAIN_NONATOMIC</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSNumber</span> *)height</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, <span class="string">@"height"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setName:(<span class="built_in">NSString</span> *)name</span><br><span class="line">&#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="string">@"name"</span>, name, OBJC_ASSO<span class="built_in">CIATION_COPY</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span> *)name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, <span class="string">@"name"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setPage:(<span class="built_in">NSInteger</span>)page</span><br><span class="line">&#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="string">@"page"</span>, @(page), OBJC_ASSO<span class="built_in">CIATION_RETAIN_NONATOMIC</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSInteger</span>)page</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [(<span class="built_in">NSNumber</span> *)objc_getAssociatedObject(<span class="keyword">self</span>, <span class="string">@"page"</span>) integerValue];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>以上代码就实现了给Category动态添加属性。下面介绍这两个方法<br>1，objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)<br>这个函数需要四个参数：源对象，关键字，关联的对象和一个关联策略。</p>
 <ul>
 <li>@param object： 源对象 self</li>
 <li>@param key：    唯一静态变量Key</li>
@@ -156,18 +157,24 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://cuidawang.github.io/2016/11/18/Category支持添加成员变量" data-id="civtgemuv0000b0fy5kmkachp" class="article-share-link">Share</a>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/18/Category支持添加成员变量" class="archive-article-date">
+  	<time datetime="2016-11-18T05:30:53.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-18</time>
+</a>
       
       
-    </footer>
+
+      <div class="clearfix"></div>
+    </div>
   </div>
+</article>
+
   
-    
 <nav id="article-nav">
   
     <a href="/2016/11/22/奇偶排序" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
           奇偶排序
@@ -177,109 +184,180 @@
   
   
     <a href="/2016/05/15/hello-world" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
     </a>
   
 </nav>
 
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序/">排序</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li></ul>
-    </div>
-  </div>
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2016/11/22/实现一个不持有元素的数组">实现一个不持有元素的数组</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/22/奇偶排序">奇偶排序</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/18/Category支持添加成员变量">Category支持添加成员变量</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/15/hello-world">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
-        
+
+
+
+
+
+
       </div>
       <footer id="footer">
-  
   <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2016 崔大王<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 崔大王
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
     </div>
   </div>
 </footer>
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a>
+    			</div>
+    	</section>
+    
 
+    
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">大家好&lt;br&gt;&lt;br&gt;非著名iOS开发者&lt;br&gt;每天都需要不断的学习</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
 
-<script src="/js/script.js"></script>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
 
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
   </div>
 </body>
 </html>
