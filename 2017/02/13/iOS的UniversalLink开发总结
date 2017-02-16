@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://fetest.xiaohongchun.com/text/universalLink_02.png">
 <meta property="og:image" content="http://fetest.xiaohongchun.com/text/universalLink_03.png">
 <meta property="og:image" content="http://fetest.xiaohongchun.com/text/universalLink_04.png">
-<meta property="og:updated_time" content="2017-02-16T09:02:32.000Z">
+<meta property="og:updated_time" content="2017-02-16T09:10:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS的UniversalLink开发总结">
 <meta name="twitter:description" content="一，简介通用链接是Apple在WWDC2015上为iOS9引入的一个新功能，是通过传统HTTP链接来启动App的技术。可以使用相同的网址打开网站和App。通过唯一的网址，就可以链接到App中具体的视图，不需要特殊的schema。如果用户没有安装App则链接到对应的普通网页。
