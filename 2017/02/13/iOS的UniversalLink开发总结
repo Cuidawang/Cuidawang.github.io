@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://fetest.xiaohongchun.com/text/universalLink_02.png">
 <meta property="og:image" content="http://fetest.xiaohongchun.com/text/universalLink_03.png">
 <meta property="og:image" content="http://fetest.xiaohongchun.com/text/universalLink_04.png">
-<meta property="og:updated_time" content="2017-02-13T07:01:18.000Z">
+<meta property="og:updated_time" content="2017-02-16T09:02:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS的UniversalLink开发总结">
 <meta name="twitter:description" content="一，简介通用链接是Apple在WWDC2015上为iOS9引入的一个新功能，是通过传统HTTP链接来启动App的技术。可以使用相同的网址打开网站和App。通过唯一的网址，就可以链接到App中具体的视图，不需要特殊的schema。如果用户没有安装App则链接到对应的普通网页。
@@ -157,17 +157,19 @@
 <p>paths对应域名中的path，用于过滤可以跳转到App的链接，支持通配符‘*’，‘？’以及‘NOT’进行匹配，匹配的优先级是从左至右依次降低。</p>
 <p>最后，需要把配置好的json文件上传到服务器中该域名的根目录下，也就是说，我们可以用GET请求可以获取到这个apple-app-association文件。</p>
 <p>当我们的App在设备上第一次运行时，如果支持Associated Domains功能，那么iOS会自动去GET定义的Domain下的apple-app-site-association文件。</p>
-<p>需要留意iOS会先请求 <a href="https://domain.com/.well-known/apple-app-site-association" target="_blank" rel="external">https://domain.com/.well-known/apple-app-site-association</a> 如果此文件请求不到，再去请求 <a href="https://domain.com/apple-app-site-association" target="_blank" rel="external">https://domain.com/apple-app-site-association</a> 。所以如果想要避免服务器接收过多GET请求，可以直接把apple-app-site-association放在./well-known/目录下。</p>
+<p>需要留意iOS会先请求<a href="https://domain.com/.well-known/apple-app-site-association如果此文件请求不到，再去请求https://domain.com/apple-app-site-association。所以如果想要避免服务器接收过多GET请求，可以直接把apple-app-site-association放在./well-known/目录下。" target="_blank" rel="external">https://domain.com/.well-known/apple-app-site-association如果此文件请求不到，再去请求https://domain.com/apple-app-site-association。所以如果想要避免服务器接收过多GET请求，可以直接把apple-app-site-association放在./well-known/目录下。</a></p>
 <h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><p>服务器上apple-app-site-association的更新不会让iOS本地的apple-app-site-association同步更新，即iOS只会在App第一次启动时请求一次，以后除非App更新或重新安装否则不会在每次打开时请求apple-app-site-association。</p>
 <h4 id="4，Xcode代码处理"><a href="#4，Xcode代码处理" class="headerlink" title="4，Xcode代码处理"></a>4，Xcode代码处理</h4><p>当服务器部署完成之后，我们需要在AppDelegate中实现代理方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application continueUserActivity:(<span class="built_in">NSUserActivity</span> *)userActivity restorationHandler:(<span class="keyword">void</span> (^)(<span class="built_in">NSArray</span> * _Nullable))restorationHandler</span><br></pre></td></tr></table></figure></p>
 <p>具体实现如下：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application continueUserActivity:(<span class="built_in">NSUserActivity</span> *)userActivity restorationHandler:(<span class="keyword">void</span> (^)(<span class="built_in">NSArray</span> * _Nullable))restorationHandler&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (![userActivity.activityType isEqualToString:<span class="built_in">NSUserActivityTypeBrowsingWeb</span>]) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取url地址</span></span><br><span class="line"><span class="built_in">NSURL</span> *jumpUrl = userActivity.webpageURL;</span><br><span class="line"><span class="comment">// <span class="doctag">TODO:</span> handle jump code</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="5，测试过程"><a href="#5，测试过程" class="headerlink" title="5，测试过程"></a>5，测试过程</h4><p>最简单的测试方法，是在系统的短信中点击一个URL直接跳转到App，点击之前定义的链接，如果能跳转到App内，就正明配置成功了。</p>
-<h4 id="6，总结"><a href="#6，总结" class="headerlink" title="6，总结"></a>6，总结</h4><p>1）apple-app-site-association不需要.json后缀。</p>
-<p>2）如果要对没有path的域名进行支持（如：www.163.com），在json文件的paths中用通配符’*’是不行的，需要在paths数组中加入’/’进行匹配。</p>
-<p>3）对json文件的请求仅在App第一次启动时进行，如果此时网络连接出了问题apple会缓存请求，等有网的时候再去请求，而实际测试抓包并没有请求故通用连接会失效。</p>
-<p>4）paths匹配的优先级是从左至右依次降低，但需要明确，否则会出问题。比如”paths”:[ “NOT /together/<em>“,”</em>“]，在IOS9.2上path为/together/*都不会跳到App，但是在IOS9.0上会跳到。</p>
-<p>5）从iOS 9.2开始，在相同的domain内Universal Links是不work的，必须要跨域才生效</p>
-<h4 id="7，参考链接"><a href="#7，参考链接" class="headerlink" title="7，参考链接"></a>7，参考链接</h4><p>1）<a href="https://developer.apple.com/library/content/documentation/General/Conceptual/AppSearch/UniversalLinks.html#//apple_ref/doc/uid/TP40016308-CH12-SW1" target="_blank" rel="external">https://developer.apple.com/library/content/documentation/General/Conceptual/AppSearch/UniversalLinks.html#//apple_ref/doc/uid/TP40016308-CH12-SW1</a> 官网链接</p>
+<h3 id="四，挖坑提示"><a href="#四，挖坑提示" class="headerlink" title="四，挖坑提示"></a>四，挖坑提示</h3><p>1，在Safari中点击链接打开App后，会发现App的右上角的navigationBar会有一串网址的链接箭头，如果你点击了它，它会跳转到Safari，同时系统会默认你选择用Safari来打开该域名的链接，而不用app打开，也就是说下次你再点击该链接，它只会在Safari中打开，不会在App中打开了。那么如何开启app跳转呢？有两种方法：第一种，在Safari页面中，手指往下拉一下页面，会显示一个“隐藏”的banner，俗称为 smart banner，右侧有一个button，点击它，就开启App跳转功能了。第二种，长按跳转链接，底下会弹出一些选项，选择在App中打开，同样可以开启这个功能。</p>
+<p>2，apple-app-site-association 文件注意格式是否正确，json格式中的引号是全角还是半角的。（特别注意一下这个问题，如果是中文的引号，点击链接不会跳转到App）</p>
+<h3 id="五，总结"><a href="#五，总结" class="headerlink" title="五，总结"></a>五，总结</h3><p>1，apple-app-site-association不需要.json后缀。</p>
+<p>2，如果要对没有path的域名进行支持（如：www.163.com），在json文件的paths中用通配符’*’是不行的，需要在paths数组中加入’/’进行匹配。</p>
+<p>3，对json文件的请求仅在App第一次启动时进行，如果此时网络连接出了问题apple会缓存请求，等有网的时候再去请求，而实际测试抓包并没有请求故通用连接会失效。</p>
+<p>4，paths匹配的优先级是从左至右依次降低，但需要明确，否则会出问题。比如”paths”:[ “NOT /together/<em>“,”</em>“]，在IOS9.2上path为/together/*都不会跳到App，但是在IOS9.0上会跳到。</p>
+<p>5，从iOS 9.2开始，在相同的domain内Universal Links是不work的，必须要跨域才生效</p>
+<h3 id="六，参考链接"><a href="#六，参考链接" class="headerlink" title="六，参考链接"></a>六，参考链接</h3><p>1）<a href="https://developer.apple.com/library/content/documentation/General/Conceptual/AppSearch/UniversalLinks.html#//apple_ref/doc/uid/TP40016308-CH12-SW1" target="_blank" rel="external">https://developer.apple.com/library/content/documentation/General/Conceptual/AppSearch/UniversalLinks.html#//apple_ref/doc/uid/TP40016308-CH12-SW1</a> 官网链接</p>
 
       
     </div>
